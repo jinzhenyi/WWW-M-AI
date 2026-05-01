@@ -12,16 +12,16 @@ if (ENABLE_LOGIN && empty($_SESSION['logged_in'])) {
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>MiMo 对话</title>
+    <title>对话</title>
     <style>
         body { font-family: sans-serif; max-width: 600px; margin: 30px auto; }
         #chat { border: 1px solid #ccc; height: 400px; overflow-y: auto; padding: 10px; margin-bottom: 10px; }
         .user { color: blue; }
-        .mimo { color: green; }
+        .ai { color: green; }
     </style>
 </head>
 <body>
-    <h2>MiMo 对话</h2>
+    <h2>ai 对话</h2>
     <div id="chat"></div>
     <input type="text" id="userInput" placeholder="输入问题..." style="width: 80%;" />
     <button onclick="sendMsg()">发送</button>
@@ -31,7 +31,7 @@ if (ENABLE_LOGIN && empty($_SESSION['logged_in'])) {
             const chat = document.getElementById('chat');
             const p = document.createElement('p');
             p.className = who;
-            p.textContent = (who === 'user' ? '你: ' : 'MiMo: ') + text;
+            p.textContent = (who === 'user' ? '你: ' : 'ai: ') + text;
             chat.appendChild(p);
             chat.scrollTop = chat.scrollHeight;
         }
@@ -51,13 +51,13 @@ if (ENABLE_LOGIN && empty($_SESSION['logged_in'])) {
                     body: JSON.stringify({ prompt: prompt })
                 });
                 if (resp.status === 403) {
-                    addLine('mimo', '登录已过期，请刷新页面重新登录');
+                    addLine('ai', '登录已过期，请刷新页面重新登录');
                     return;
                 }
                 const data = await resp.json();
-                addLine('mimo', data.reply);
+                addLine('ai', data.reply);
             } catch (err) {
-                addLine('mimo', '错误: ' + err.message);
+                addLine('ai', '错误: ' + err.message);
             }
         }
 
